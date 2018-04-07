@@ -1,3 +1,4 @@
+'use strict'
 const redis    = require("redis");
 const uuidv1   = require('uuid/v1');
 
