@@ -12,8 +12,8 @@ const Receiver = function(config) {
   const listenerClient = redis.createClient(config);
   listenerClient.psubscribe("__keyevent@0__:expired");
 
-  // receive handler
-  const listenerHandler = function(pattern, channel, expiredKey) {
+  // push Message
+  const pushMessage = function(pattern, channel, expiredKey) {
 
     client.hincrby(statusHash, expiredKey, 1, (err, status)=> {
 
@@ -34,7 +34,7 @@ const Receiver = function(config) {
   };
 
   // when a message is received...
-  listenerClient.on("pmessage", listenerHandler);
+  listenerClient.on("pmessage", pushMessage);
 
   // create a client for add messages to the queue
   const client = redis.createClient(config);
@@ -47,7 +47,7 @@ const Receiver = function(config) {
       if (err) return console.log(err);
       for(let i = 0; i < keys.length; i++) {
         client.get(keys[i], (err, value)=> {
-          if (value === null) listenerHandler(null, null, keys[i])
+          if (value === null) pushMessage(null, null, keys[i])
         });
       }
 
