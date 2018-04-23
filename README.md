@@ -1,6 +1,6 @@
 ### Description
 
-Rest API with method */api/echo-at-time* - which receives two parameters, time and message, and writes that message to the server console at the given time.
+Rest API with method **/api/echo-at-time** - which receives two parameters, time and message, and writes that message to the server console at the given time.
 
 The application uses Redis to persist the messages and the time they should be sent to. There might be more than one server running behind a load balancer.
 
